@@ -9,7 +9,7 @@ Build mode: fast
 
 ## Slices
 
-- [ ] **1. Runnable server and conversational messaging interface with Mind Bubble scaffold**
+- [x] **1. Runnable server and conversational messaging interface with Mind Bubble scaffold**
   Becomes usable: The FastAPI server starts and serves the modern dark-mode application. Users can enter notes into the chat dock and see their thought stream appear in real time.
   Why now: Proves the runtime, file serving, styling, and core conversational interface end-to-end so all animations and analysis logic have an operational foundation.
   PRD ref: `prd.md > Screens and Layout`, `prd.md > Features and Behavior > 1. Conversational Thought Ingestion`
@@ -19,7 +19,7 @@ Build mode: fast
   Learner check: Open `http://localhost:8000`, type a casual thought, press Enter, and see it display in the thought stream.
   Commit: `feat: scaffold server and conversational messaging interface`
 
-- [ ] **2. Semantic weight scoring and reactive Mind Bubble inflation dynamics**
+- [x] **2. Semantic weight scoring and reactive Mind Bubble inflation dynamics**
   Becomes usable: Submitting a note calculates its semantic insight density via `POST /api/note`. The central Mind Bubble dynamically scales, pulses, and intensifies its glow based on insight weight rather than raw count. Includes the "Load Sample Day" button.
   Why now: Delivers the core visual metaphor and interactive behavior that defines the app's personality and prepares the stage for the burst.
   PRD ref: `prd.md > Features and Behavior > 2. Semantic Weight-Driven Mind Bubble`
