@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subtext AI — App Map & Architecture Route</title>
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card-bg: #151D2E;
+      --accent-purple: #A855F7;
+      --accent-blue: #3B82F6;
+      --accent-emerald: #10B981;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border: #24314A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 2.5rem 1.5rem;
+    }
+    .container { max-width: 820px; margin: 0 auto; }
+    h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff; }
+    .subtitle { color: var(--accent-purple); font-weight: 600; margin-bottom: 2rem; font-size: 0.95rem; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    p { margin-bottom: 0.85rem; color: var(--text-muted); font-size: 0.95rem; }
+    code {
+      background: rgba(168, 85, 247, 0.15);
+      color: #E9D5FF;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.88rem;
+    }
+    pre {
+      background: #080C14;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+    }
+    .route-step {
+      display: flex;
+      margin-bottom: 1.25rem;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-purple);
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-right: 1rem;
+      margin-top: 0.2rem;
+    }
+    svg text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Subtext AI — App Map</h1>
+    <div class="subtitle">Architectural Route & Takeaway Reference</div>
+
+    <div class="card">
+      <h2>Plain-Language Overview</h2>
+      <p>
+        <strong>Subtext AI</strong> is a reflective daily tool that reads between the lines of raw, fragmented thoughts.
+        Instead of treating notes as a generic to-do list, it evaluates their <em>semantic insight density</em> (emotional markers, cognitive conflict, micro-avoidance) to inflate a central "Mind Bubble."
+        At critical mass, the bubble bursts to unveil 3 diagnostic cards:
+        <strong>Between the Lines</strong> (unspoken common denominator), <strong>Your Blind Spot</strong> (subconscious defense mechanism), and <strong>Deep Perspective</strong> (actionable reframe).
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Architecture & Data Flow</h2>
+      <svg width="100%" height="160" viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="30" width="180" height="100" rx="10" fill="#1E293B" stroke="#3B82F6" stroke-width="2"/>
+        <text x="100" y="65" fill="#FFFFFF" font-size="14" font-weight="bold" text-anchor="middle">1. Thought Input</text>
+        <text x="100" y="90" fill="#94A3B8" font-size="11" text-anchor="middle">static/index.html & app.js</text>
+        <text x="100" y="108" fill="#38BDF8" font-size="10" text-anchor="middle">POST /api/note</text>
+
+        <path d="M 190 80 L 260 80" stroke="#A855F7" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <rect x="270" y="30" width="220" height="100" rx="10" fill="#1E293B" stroke="#A855F7" stroke-width="2"/>
+        <text x="380" y="65" fill="#FFFFFF" font-size="14" font-weight="bold" text-anchor="middle">2. Semantic Scoring & LLM</text>
+        <text x="380" y="90" fill="#94A3B8" font-size="11" text-anchor="middle">server.py (calculate_semantic_weight)</text>
+        <text x="380" y="108" fill="#C084FC" font-size="10" text-anchor="middle">POST /api/analyze</text>
+
+        <path d="M 490 80 L 560 80" stroke="#10B981" stroke-width="2"/>
+
+        <rect x="570" y="30" width="180" height="100" rx="10" fill="#1E293B" stroke="#10B981" stroke-width="2"/>
+        <text x="660" y="65" fill="#FFFFFF" font-size="14" font-weight="bold" text-anchor="middle">3. 3-Card Reveal</text>
+        <text x="660" y="90" fill="#94A3B8" font-size="11" text-anchor="middle">Between the Lines</text>
+        <text x="660" y="108" fill="#34D399" font-size="10" text-anchor="middle">Blind Spot + Deep Reframe</text>
+      </svg>
+    </div>
+
+    <div class="card">
+      <h2>The 3 Code Stops (Follow the Trace)</h2>
+      
+      <div class="route-step">
+        <div class="step-num">1</div>
+        <div>
+          <strong>User Entry Dock & Event Handler</strong> — <code>static/app.js</code> (lines 140–180)<br>
+          <p>Listens for note submissions, sends text to <code>/api/note</code>, and recalculates the Mind Bubble's CSS transform scale and pulse frequency.</p>
+        </div>
+      </div>
+
+      <div class="route-step">
+        <div class="step-num">2</div>
+        <div>
+          <strong>Linguistic Scoring & Analysis Engine</strong> — <code>server.py</code> (lines 35–85 & 120–190)<br>
+          <p>Evaluates emotional cues and cognitive conflict markers (0–40 pts). Connects to OpenRouter or engages the fallback engine to structure the 3 diagnostic dimensions.</p>
+        </div>
+      </div>
+
+      <div class="route-step">
+        <div class="step-num">3</div>
+        <div>
+          <strong>Explosion Canvas & Diagnostic Cards Reveal</strong> — <code>static/app.js</code> & <code>static/style.css</code><br>
+          <p>Executes the 2D particle burst animation, collapses the stage view, and reveals the glassmorphism diagnostic cards.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>"To Change This, Start Here"</h2>
+      <ul style="padding-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem;">
+        <li style="margin-bottom: 0.5rem;"><strong>To adjust saturation speed:</strong> Change <code>targetSaturation: 100</code> in <code>static/app.js</code> or modify scoring multipliers in <code>server.py > calculate_semantic_weight</code>.</li>
+        <li style="margin-bottom: 0.5rem;"><strong>To modify the demo scenario:</strong> Edit <code>SAMPLE_NOTES</code> in <code>server.py</code>.</li>
+        <li style="margin-bottom: 0.5rem;"><strong>To swap AI models:</strong> Update <code>AI_MODEL</code> in <code>.env</code> (e.g., <code>meta-llama/llama-3.3-70b-instruct:free</code>).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>A Practice to Reuse</h2>
+      <p>
+        <strong>Plan-First Anchoring with Observable Verification:</strong>
+        Instead of prompting the AI coding agent to "build a journaling app" (which leads to generic to-do clones and agent drift), we first specified the exact <strong>unique kernel</strong>, the <strong>semantic inflation formula</strong>, and observable acceptance criteria in <code>scope.md</code> and <code>prd.md</code>.
+        Because every slice had a mechanical check, the agent stayed 100% on track and delivered a complete, working PoC in a single session.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>How to Run Locally</h2>
+      <pre>python server.py
+# Open http://localhost:8000 in your browser</pre>
+    </div>
+  </div>
+</body>
+</html>

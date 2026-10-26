@@ -29,7 +29,7 @@ Build mode: fast
   Learner check: Click "Load Sample Day" or enter 2 real notes; watch the Mind Bubble swell and accelerate its pulse.
   Commit: `feat: add semantic weight scoring and reactive mind bubble inflation`
 
-- [ ] **3. Deep LLM subtext engine, auto/manual burst, and 3-card reveal**
+- [x] **3. Deep LLM subtext engine, auto/manual burst, and 3-card reveal**
   Becomes usable: When the bubble saturates (or upon manual burst), the bubble ruptures with a particle animation, sends the accumulated text to the LLM (OpenRouter/local proxy with fallback), and reveals the 3 sharp insight cards ("Between the Lines", "Your Blind Spot", "Deep Perspective"). Premature bursts trigger humorous guidance.
   Why now: Completes the full end-to-end journey and delivers the unique kernel required for the hackathon submission.
   PRD ref: `prd.md > Features and Behavior > 3. Deep Analysis Engine`, `prd.md > States and Boundaries`
@@ -41,23 +41,23 @@ Build mode: fast
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — Slice 2 (Mind Bubble inflation and sample loader verified in browser)
-- [ ] Final kick-the-tires exploration and feedback completed — Slice 3 (Full burst & card reveal verified)
+- [x] Early usable behavior explored — Slice 2 (Mind Bubble inflation and sample loader verified in browser)
+- [x] Final kick-the-tires exploration and feedback completed — Slice 3 (Full burst & card reveal verified)
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence: [to be recorded upon completion]
-Route and stops: [to be recorded upon completion]
-Edit outcome: [to be recorded upon completion]
-Reflection: [to be recorded upon completion]
-Activity mode: [to be recorded upon completion]
+Activity and evidence: Verified full end-to-end user loop from note entry, semantic inflation, auto-burst, and 3-card reveal. App map generated with architecture data-flow and 3 code stops.
+Route and stops: static/app.js (dock entry), server.py (semantic scoring & LLM engine), static/app.js (particle burst & card reveal).
+Edit outcome: Kept clean standalone offline-safe implementation.
+Reflection: Learner reflected that plan-first anchoring with explicit semantic rules kept the agent strictly aligned with zero drift.
+Activity mode: Live app tested on http://localhost:8000.
 
 ## Revisions
