@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subtext AI — Read Between the Lines</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#07090E',
+            cardbg: '#111827',
+            accentPurple: '#A855F7',
+            accentBlue: '#3B82F6',
+            accentRose: '#F43F5E'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-obsidian min-h-screen text-slate-100 flex flex-col justify-between selection:bg-purple-600 selection:text-white relative">
+  <!-- Ambient background lighting -->
+  <div class="bg-glow" id="ambientGlow"></div>
+
+  <!-- Header -->
+  <header class="relative z-10 w-full max-w-5xl mx-auto px-6 py-5 flex items-center justify-between border-b border-slate-800/60">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/25">
+        <i data-lucide="eye" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+        <div class="flex items-center space-x-2">
+          <h1 class="text-xl font-bold tracking-tight text-white">Subtext AI</h1>
+          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Devpost POC</span>
+        </div>
+        <p class="text-xs text-slate-400">Read between the lines of your daily thoughts</p>
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <button id="sampleBtn" class="flex items-center space-x-2 px-3.5 py-1.5 text-xs font-medium rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-purple-300 border border-purple-500/30 transition shadow-sm hover:border-purple-400">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i>
+        <span>Load Sample Day</span>
+      </button>
+      <button id="resetBtn" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-lg transition" title="Clear and restart session">
+        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="relative z-10 flex-1 max-w-4xl w-full mx-auto px-6 py-6 flex flex-col items-center justify-center">
+    
+    <!-- Bubble & Stage View (Active during thought accumulation) -->
+    <div id="stageView" class="w-full flex flex-col items-center text-center my-auto transition-all duration-700">
+      
+      <!-- Subtitle prompt -->
+      <div class="mb-6 max-w-lg">
+        <p id="bubbleStatusText" class="text-sm font-medium text-slate-400 tracking-wide uppercase">
+          Mind Bubble: Resting (0% Subtext Density)
+        </p>
+        <p id="bubbleHint" class="text-xs text-slate-500 mt-1">
+          Drop fragmented daily notes. Watch the bubble swell with semantic weight.
+        </p>
+      </div>
+
+      <!-- Mind Bubble Visual -->
+      <div class="relative flex items-center justify-center my-4">
+        <canvas id="burstCanvas" width="500" height="500"></canvas>
+        <div id="bubbleContainer" class="mind-bubble-container" title="Click to manually trigger burst">
+          <div id="bubbleOrb" class="mind-bubble"></div>
+          <!-- Inner Percentage -->
+          <div class="relative z-10 text-center pointer-events-none select-none">
+            <span id="bubblePercent" class="text-3xl font-extrabold text-white drop-shadow-md">0%</span>
+            <span class="block text-[11px] font-medium text-purple-200/80 uppercase tracking-wider">Subtext</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Early Warning Toast/Feedback -->
+      <div id="earlyAlert" class="hidden mt-4 max-w-md px-4 py-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs text-center fade-in-up">
+        <div class="flex items-center justify-center space-x-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-rose-400 flex-shrink-0"></i>
+          <span id="earlyAlertText">Not enough subtext yet! Share a few more unfiltered thoughts.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Cards View (Revealed after Burst) -->
+    <div id="resultsView" class="hidden w-full max-w-3xl my-auto fade-in-up">
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
+          <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+          <span>Subtext Decrypted</span>
+        </div>
+        <h2 class="text-2xl font-bold text-white tracking-tight">Between Your Lines Today</h2>
+        <p class="text-xs text-slate-400 mt-1">Here are the hidden dynamics, defense mechanisms, and your path forward.</p>
+      </div>
+
+      <!-- 3 Diagnostic Cards -->
+      <div class="grid grid-cols-1 gap-4">
+        <!-- Card 1: Between the Lines -->
+        <div class="glass-panel-glow p-5 rounded-2xl relative overflow-hidden group hover:border-purple-500/40 transition">
+          <div class="flex items-start space-x-3.5">
+            <div class="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i data-lucide="git-merge" class="w-4 h-4 text-purple-400"></i>
+            </div>
+            <div class="flex-1">
+              <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">The Hidden Dynamic</span>
+              <h3 class="text-base font-bold text-white mt-0.5 mb-1.5">Between the Lines</h3>
+              <p id="cardBetweenLines" class="text-sm text-slate-300 leading-relaxed font-normal">
+                Analyzing hidden patterns...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Blind Spot -->
+        <div class="glass-panel-glow p-5 rounded-2xl relative overflow-hidden group hover:border-rose-500/40 transition">
+          <div class="flex items-start space-x-3.5">
+            <div class="w-9 h-9 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i data-lucide="target" class="w-4 h-4 text-rose-400"></i>
+            </div>
+            <div class="flex-1">
+              <span class="text-xs font-semibold text-rose-400 uppercase tracking-wider">Unconscious Avoidance</span>
+              <h3 class="text-base font-bold text-white mt-0.5 mb-1.5">Your Blind Spot</h3>
+              <p id="cardBlindSpot" class="text-sm text-slate-300 leading-relaxed font-normal">
+                Detecting cognitive friction...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Deep Perspective -->
+        <div class="glass-panel-glow p-5 rounded-2xl relative overflow-hidden group hover:border-emerald-500/40 transition">
+          <div class="flex items-start space-x-3.5">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i data-lucide="compass" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <div class="flex-1">
+              <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Precision Action</span>
+              <h3 class="text-base font-bold text-white mt-0.5 mb-1.5">Deep Perspective & Micro-Shift</h3>
+              <p id="cardDeepPerspective" class="text-sm text-slate-300 leading-relaxed font-normal">
+                Formulating actionable reframe...
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons below results -->
+      <div class="mt-6 flex items-center justify-center space-x-4">
+        <button id="copyDiagnosisBtn" class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span id="copyDiagnosisText">Copy Full Diagnosis</span>
+        </button>
+        <button id="resetSessionBtn" class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-medium text-white shadow-lg shadow-purple-600/30 transition">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+          <span>Reflect on Another Day</span>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Thought Stream History (Subtle Pills above the dock) -->
+  <div class="relative z-10 w-full max-w-3xl mx-auto px-6 mb-2">
+    <div id="notesContainer" class="flex flex-col space-y-2 max-h-36 overflow-y-auto pr-1">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+
+  <!-- Bottom Conversational Dock -->
+  <footer class="relative z-20 w-full max-w-3xl mx-auto px-6 pb-6 pt-2">
+    <div class="glass-panel p-2 rounded-2xl flex items-center space-x-2 shadow-2xl">
+      <div class="relative flex-1">
+        <input 
+          type="text" 
+          id="noteInput" 
+          placeholder="Drop a raw thought, feeling, or friction from your day... (Press Enter)" 
+          class="w-full bg-transparent px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none"
+          autocomplete="off"
+        >
+      </div>
+
+      <!-- Send Note Button -->
+      <button 
+        id="sendNoteBtn" 
+        class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center space-x-1.5 transition disabled:opacity-50"
+      >
+        <span>Feed Bubble</span>
+        <i data-lucide="corner-down-left" class="w-3.5 h-3.5"></i>
+      </button>
+
+      <!-- Burst Trigger Button -->
+      <button 
+        id="manualBurstBtn" 
+        class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-700 to-indigo-600 hover:from-purple-600 hover:to-indigo-500 text-white text-xs font-semibold flex items-center space-x-1.5 shadow-md shadow-purple-900/40 transition"
+        title="Burst the bubble and analyze subtext"
+      >
+        <i data-lucide="zap" class="w-3.5 h-3.5 text-yellow-300"></i>
+        <span>Burst</span>
+      </button>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
